@@ -70,25 +70,19 @@ function label(instance) {
   return instance.name || instance.systemName || instance.id;
 }
 
-// Tenta extrair o estado de conexão de diferentes estruturas de resposta da uazapiGO
+// Extrai o status de conexão da resposta da uazapiGO
+// Estrutura real: { instance: { status: "connected" | "disconnected" } }
 function extractState(data) {
   if (!data) return 'unknown';
-  // { state: "open" }
-  if (typeof data.state === 'string') return data.state;
-  // { state: { connection: "open" } }
-  if (typeof data.state?.connection === 'string') return data.state.connection;
-  // { instance: { state: "open" } }
-  if (typeof data.instance?.state === 'string') return data.instance.state;
-  // { status: "open" }
-  if (typeof data.status === 'string') return data.status;
-  // { connection: "open" }
-  if (typeof data.connection === 'string') return data.connection;
-  // fallback: loga o JSON cru para diagnóstico
+  if (typeof data.instance?.status === 'string') return data.instance.status;
+  if (typeof data.instance?.state === 'string')  return data.instance.state;
+  if (typeof data.status === 'string')            return data.status;
+  if (typeof data.state === 'string')             return data.state;
   return JSON.stringify(data).slice(0, 120);
 }
 
 function isConnectedState(state) {
-  return state === 'open';
+  return state === 'connected' || state === 'open';
 }
 
 // ── Monitor loop ──────────────────────────────────────────────────────────────
