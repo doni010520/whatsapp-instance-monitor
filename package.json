@@ -1,0 +1,12 @@
+{
+  "name": "whatsapp-instance-monitor",
+  "version": "1.0.0",
+  "description": "Monitors uazapiGO WhatsApp instances and sends alerts via WhatsApp when one goes down",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
